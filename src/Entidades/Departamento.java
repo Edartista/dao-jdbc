@@ -58,6 +58,6 @@ public class Departamento implements Serializable {
     }
 
     public String toString(){
-        return String.format("Dados do departamento:\nNome: %s \nID: %d", nome, id);
+        return String.format("Nome: %s \nID: %d", nome, id);
     }
 }
