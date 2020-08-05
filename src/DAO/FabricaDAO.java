@@ -1,9 +1,10 @@
 package DAO;
-import DAO.Impl.VendedorDAOImplJDBC;
+import DAO.Impl.VendedorDAOJDBC;
+import db.DB;
 public class FabricaDAO {
     
     public static VendedorDAO criarVendedorDAO(){
-        return new Vendedor
+        return new VendedorDAOJDBC(DB.conectar());
     }
     
 }
