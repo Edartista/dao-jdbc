@@ -21,6 +21,11 @@ public class Programa {
         List<Vendedor> listaDeVendedores = vendedorDAO.procurarPorDepartamento(departamento);
         
         listaDeVendedores.forEach(System.out::println);
+        
+        System.out.println("\n=== TEST 03: VENDEDOR PROCURAR POR TODOS ====");
+        listaDeVendedores = vendedorDAO.procurarTodos();
+        
+        listaDeVendedores.forEach(System.out::println);
     }
     
     
