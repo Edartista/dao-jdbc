@@ -28,10 +28,17 @@ public class Programa {
         
         listaDeVendedores.forEach(System.out::println);
         
-        System.out.println("\n=== TEST 04: VENDEDOR INSERIR ====");
+        /*/System.out.println("\n=== TEST 04: VENDEDOR INSERIR ====");
         Vendedor novoVendedor = new Vendedor(null, "Greg", "greg@gmail.com", new Date(), 4000.0, departamento);
         vendedorDAO.inserir(novoVendedor);
         System.out.println("Inserido! Novo Id é " + novoVendedor.getId());
+         /*/
+        
+        System.out.println("\n=== TEST 05 : VENDEDOR ATUALIZAR ====");
+        vendedor = vendedorDAO.procurarPorId(1);
+        vendedor.setNome("Martha Waine");
+        vendedorDAO.atualizar(vendedor);
+        System.out.println("Atualização completa!");
     
     }  
 }

@@ -60,13 +60,35 @@ public class VendedorDAOJDBC implements VendedorDAO{
         }
         finally{
             DB.closeStatement(st);
-        }
-        
+        } 
     }
 
     @Override
-    public void atualizar(Vendedor obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void atualizar(Vendedor vendedor) {
+PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "UPDATE seller "
+                    + "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
+                    + "WHERE Id = ?");
+            st.setString(1, vendedor.getNome());
+            st.setString(2, vendedor.getEmail());
+            st.setDate(3, new java.sql.Date(vendedor.getAniversário().getTime()));
+            st.setDouble(4, vendedor.getSalárioBase());
+            st.setInt(5, vendedor.getDepartamento().getId());
+            st.setInt(6, vendedor.getId());
+            
+            st.executeUpdate();
+            
+        } 
+        
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        
+        finally{
+            DB.closeStatement(st);
+        }
     }
 
     @Override
@@ -104,10 +126,10 @@ public class VendedorDAOJDBC implements VendedorDAO{
         catch (SQLException e) {
             throw new DbException(e.getMessage());
         }
+        
         finally{ // Desconectando o Statement e o ResultSet:
             DB.closeStatement(st);
-            DB.closeResultSet(rs);
-            
+            DB.closeResultSet(rs);    
         }
     }
 
@@ -140,11 +162,14 @@ public class VendedorDAOJDBC implements VendedorDAO{
                 listaDeVendedores.add(vendedor); // Inclui o Vendedor na listaDeVendedores
                 
             }
-            return listaDeVendedores; // Retorna a lista           
+            return listaDeVendedores; // Retorna a lista  
+            
         } //Tratando Exceções: 
+        
         catch (SQLException e) {
             throw new DbException(e.getMessage());
         }
+        
         finally{ // Desconectando o Statement e o ResultSet:
             DB.closeStatement(st);
             DB.closeResultSet(rs);
@@ -204,16 +229,16 @@ public class VendedorDAOJDBC implements VendedorDAO{
             }
             return listaDeVendedores; // Retorna a lista           
         } //Tratando Exceções: 
+        
         catch (SQLException e) {
             throw new DbException(e.getMessage());
         }
+        
         finally{ // Desconectando o Statement e o ResultSet:
             DB.closeStatement(st);
             DB.closeResultSet(rs);
             
         }
     }
-    
-    
     
 }
