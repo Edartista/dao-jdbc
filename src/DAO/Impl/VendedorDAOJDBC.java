@@ -3,6 +3,7 @@ package DAO.Impl;
 import DAO.VendedorDAO;
 import Entidades.Departamento;
 import Entidades.Vendedor;
+import com.mysql.jdbc.Statement;
 import db.DB;
 import db.DbException;
 import java.sql.Connection;
@@ -25,8 +26,42 @@ public class VendedorDAOJDBC implements VendedorDAO{
     }
     
     @Override
-    public void inserir(Vendedor obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void inserir(Vendedor vendedor) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement(
+                    "INSERT INTO seller "
+                    +"(Name, Email, BirthDate, BaseSalary, DepartmentId) " 
+                    +"VALUES "
+                    +"(?, ?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            st.setString(1, vendedor.getNome());
+            st.setString(2, vendedor.getEmail());
+            st.setDate(3, new java.sql.Date(vendedor.getAniversário().getTime()));
+            st.setDouble(4, vendedor.getSalárioBase());
+            st.setInt(5, vendedor.getDepartamento().getId());
+            
+            int linhasAfetadas = st.executeUpdate();
+            
+            if (linhasAfetadas > 0){
+                ResultSet rs = st.getGeneratedKeys();
+                if (rs.next()){
+                    int id = rs.getInt(1);
+                    vendedor.setId(id);                    
+                } 
+                DB.closeResultSet(rs);
+            }
+            else{
+                throw new DbException("Erro inesperado! Nenhuma linha foi afetada!");
+            }     
+        } 
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally{
+            DB.closeStatement(st);
+        }
+        
     }
 
     @Override

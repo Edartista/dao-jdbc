@@ -4,6 +4,7 @@ import DAO.FabricaDAO;
 import DAO.VendedorDAO;
 import Entidades.Departamento;
 import Entidades.Vendedor;
+import java.util.Date;
 import java.util.List;
 
 public class Programa {
@@ -26,7 +27,11 @@ public class Programa {
         listaDeVendedores = vendedorDAO.procurarTodos();
         
         listaDeVendedores.forEach(System.out::println);
-    }
+        
+        System.out.println("\n=== TEST 04: VENDEDOR INSERIR ====");
+        Vendedor novoVendedor = new Vendedor(null, "Greg", "greg@gmail.com", new Date(), 4000.0, departamento);
+        vendedorDAO.inserir(novoVendedor);
+        System.out.println("Inserido! Novo Id é " + novoVendedor.getId());
     
-    
+    }  
 }
