@@ -93,7 +93,22 @@ PreparedStatement st = null;
 
     @Override
     public void deletarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement("DELETE FROM seller WHERE Id =?");
+            st.setInt(1, id);
+            int linhas = st.executeUpdate();
+            
+            if (linhas == 0){
+                throw new DbException("Id não encontrado!");
+            }
+        } 
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally{
+            DB.closeStatement(st);
+        }
     }
 
     @Override

@@ -6,11 +6,13 @@ import Entidades.Departamento;
 import Entidades.Vendedor;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class Programa {
     
     public static void main(String[] args) {
         
+        Scanner teclado = new Scanner(System.in);
         
         VendedorDAO vendedorDAO = FabricaDAO.criarVendedorDAO();
         System.out.println("===TEST 01: VENDEDOR PROCURAR POR ID ====");
@@ -39,6 +41,15 @@ public class Programa {
         vendedor.setNome("Martha Waine");
         vendedorDAO.atualizar(vendedor);
         System.out.println("Atualização completa!");
-    
+        
+        System.out.println("\n=== TEST 06: VENDEDOR DELETE ====");
+        System.out.println("Digite um Id para deletar:");
+        int id = teclado.nextInt();
+        
+        vendedorDAO.deletarPorId(id);
+        System.out.println("Deletado com sucesso!");
+        
+        teclado.close();
     }  
+
 }
